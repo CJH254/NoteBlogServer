@@ -5,6 +5,7 @@ import gupt.cjh.noteblog.pojo.RespBean;
 import gupt.cjh.noteblog.pojo.Tag;
 import gupt.cjh.noteblog.service.Impl.TagServiceImpl;
 import gupt.cjh.noteblog.service.TagService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,8 @@ import java.util.List;
  * @Version V1.0
  **/
 @RestController
+@RequestMapping("/tag")
+@Api(value = "标签信息管理")
 public class TagController {
 
     @Autowired
