@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gupt.cjh.noteblog.dao.BlogMapper">
+    <resultMap id="BaseResultMap" type="gupt.cjh.noteblog.pojo.Blog">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="uid" property="uId" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="views" property="views" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="BIT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,uId, title, description, content, views, status, create_time, update_time
+    </sql>
+
+    <resultMap id="BlogWithTag" type="gupt.cjh.noteblog.pojo.Blog" extends="BaseResultMap">
+        <collection property="tags" ofType="gupt.cjh.noteblog.pojo.Tag">
+            <id column="tid" property="id" jdbcType="INTEGER"/>
+            <result column="tag_name" property="name" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <!--自定义SQL-->
+    <!--分页获取所有博客-->
+    <select id="getAllBlogByPage" resultMap="BlogWithTag">
+        SELECT b.*,t.id AS tid,t.`name` AS tag_name
+        FROM `t_blog`b INNER JOIN t_blog_tag bt ON b.id = bt.blog_id
+        INNER JOIN t_tag t ON bt.tag_id = t.id
+        ORDER BY b.create_time DESC
+        <if test="page !=null and size !=null ">
+            limit #{page},#{size}
+        </if>
+
+    </select>
+    <!--根据用户ID分页获取相应博客-->
+    <select id="selectBlogById" resultMap="BlogWithTag" parameterType="java.lang.Integer">
+        SELECT b.*,t.id AS tid,t.`name` AS tag_name
+        FROM `t_blog`b INNER JOIN t_blog_tag bt ON b.id = bt.blog_id
+        INNER JOIN t_tag t ON bt.tag_id = t.id
+        <where>
+        <if test="blog.uId !=null and blog.uId !='' ">
+            AND b.uid =#{blog.uId}
+        </if>
+            <if test="blog.content !=null and blog.content !=''">
+                AND content like concat('%',#{blog.content},'%')
+            </if>
+        </where>
+        ORDER BY b.create_time DESC
+
+        <if test="page !=null and size !=null ">
+          limit #{page},#{size}
+        </if>
+
+    </select>
+    <!--批量删除标签-->
+    <delete id="deleteBatchBlog">
+        delete from t_blog where id in
+        <foreach collection="BlogIds" item="blogId" separator="," open="(" close=")">
+            #{blogId}
+        </foreach>
+    </delete>
+    <!--按内容模糊搜索，并获取相应博客数量-->
+    <select id="getTotal" resultType="java.lang.Long">
+        SELECT COUNT(*) FROM t_blog
+        <where>
+            <if test="blog!=null">
+                <if test="blog.uId !=null">
+                    AND uid = #{blog.uId}
+                </if>
+                <if test="blog.content !=null and blog.content !=''">
+                    AND content like concat('%',#{blog.content},'%')
+                </if>
+            </if>
+
+        </where>
+    </select>
+
+
+
+
+    <!--逆向生成SQL-->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_blog
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_blog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="gupt.cjh.noteblog.pojo.Blog">
+    insert into t_blog (id,uId, title, description,
+      content, views, status, 
+      create_time, update_time)
+    values (#{id,jdbcType=INTEGER},#{uId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+      #{content,jdbcType=VARCHAR}, #{views,jdbcType=INTEGER}, #{status,jdbcType=BIT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="gupt.cjh.noteblog.pojo.Blog" useGeneratedKeys="true" keyProperty="id">
+        insert into t_blog
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="uId != null">
+                uId,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="views != null">
+                views,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="uId != null">
+                #{uId,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="views != null">
+                #{views,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="gupt.cjh.noteblog.pojo.Blog">
+        update t_blog
+        <set>
+            <if test="uId != null">
+                #{uId,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="views != null">
+                views = #{views,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="gupt.cjh.noteblog.pojo.Blog">
+    update t_blog
+    set
+    uId = #{uId,jdbcType=INTEGER}
+        title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      views = #{views,jdbcType=INTEGER},
+      status = #{status,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

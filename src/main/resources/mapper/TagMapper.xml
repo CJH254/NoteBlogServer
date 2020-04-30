@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gupt.cjh.noteblog.dao.TagMapper">
+    <resultMap id="BaseResultMap" type="gupt.cjh.noteblog.pojo.Tag">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+      id, name
+    </sql>
+
+    <!--自定义SQL-->
+    <!--根据ID获取标签-->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_tag
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <!--获取所有标签-->
+    <select id="getAllTags" resultType="gupt.cjh.noteblog.pojo.Tag">
+      SELECT * FROM t_tag;
+    </select>
+    <!--修改标签信息-->
+    <update id="updateTagSelective" parameterType="gupt.cjh.noteblog.pojo.Tag">
+        update t_tag
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <!--批量删除标签-->
+    <delete id="deleteBatchTags">
+        delete from t_tag where id in
+        <foreach collection="tagIds" item="tagId" separator="," open="(" close=")">
+            #{tagId}
+        </foreach>
+    </delete>
+    <!--删除标签-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_tag
+        where id = #{id,jdbcType=INTEGER}
+     </delete>
+    <!--插入标签-->
+    <insert id="insertSelective" parameterType="gupt.cjh.noteblog.pojo.Tag">
+        insert into t_tag
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+
+
+    <!--逆向生成SQL-->
+    <insert id="insert" parameterType="gupt.cjh.noteblog.pojo.Tag">
+    insert into t_tag (id, name)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="gupt.cjh.noteblog.pojo.Tag">
+    update t_tag
+    set name = #{name,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

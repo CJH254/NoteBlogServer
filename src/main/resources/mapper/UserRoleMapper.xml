@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gupt.cjh.noteblog.dao.UserRoleMapper">
+    <resultMap id="BaseResultMap" type="gupt.cjh.noteblog.pojo.UserRole">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="role_id" property="roleId" jdbcType="VARCHAR"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, nick_name, username, password, type, avatarUrl, create_time
+  </sql>
+    <insert id="insertUserRole" >
+        insert into t_user_role (user_id, role_id) values(#{user.id},#{roleId})
+    </insert>
+</mapper>
