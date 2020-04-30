@@ -22,7 +22,6 @@ public interface BlogMapper {
 
     int updateByPrimaryKey(Blog record);
 
-    List<Blog> getAllBlogByPage(@Param("page") Integer page, @Param("size") Integer size);
 
     List<Blog> selectBlogById(@Param("page") Integer page, @Param("size") Integer size, @Param("blog") Blog blog);
 

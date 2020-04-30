@@ -24,36 +24,25 @@
     </resultMap>
 
     <!--自定义SQL-->
-    <!--分页获取所有博客-->
-    <select id="getAllBlogByPage" resultMap="BlogWithTag">
-        SELECT b.*,t.id AS tid,t.`name` AS tag_name
-        FROM `t_blog`b INNER JOIN t_blog_tag bt ON b.id = bt.blog_id
-        INNER JOIN t_tag t ON bt.tag_id = t.id
-        ORDER BY b.create_time DESC
-        <if test="page !=null and size !=null ">
-            limit #{page},#{size}
-        </if>
-
-    </select>
     <!--根据用户ID分页获取相应博客-->
     <select id="selectBlogById" resultMap="BlogWithTag" parameterType="java.lang.Integer">
         SELECT b.*,t.id AS tid,t.`name` AS tag_name
         FROM `t_blog`b INNER JOIN t_blog_tag bt ON b.id = bt.blog_id
         INNER JOIN t_tag t ON bt.tag_id = t.id
         <where>
-        <if test="blog.uId !=null and blog.uId !='' ">
-            AND b.uid =#{blog.uId}
-        </if>
-            <if test="blog.content !=null and blog.content !=''">
-                AND content like concat('%',#{blog.content},'%')
+            <if test="blog != null">
+                <if test="blog.uId !=null and blog.uId !='' ">
+                    AND b.uid =#{blog.uId}
+                </if>
+                <if test="blog.content !=null and blog.content !=''">
+                    AND content like concat('%',#{blog.content},'%')
+                </if>
             </if>
         </where>
         ORDER BY b.create_time DESC
-
         <if test="page !=null and size !=null ">
-          limit #{page},#{size}
+            limit #{page},#{size}
         </if>
-
     </select>
     <!--批量删除标签-->
     <delete id="deleteBatchBlog">
@@ -77,8 +66,6 @@
 
         </where>
     </select>
-
-
 
 
     <!--逆向生成SQL-->

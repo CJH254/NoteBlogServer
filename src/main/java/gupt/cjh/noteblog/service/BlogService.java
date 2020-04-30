@@ -15,14 +15,6 @@ import java.util.List;
 
 public interface BlogService {
 
-    /**
-     * 分页获取所有用户博客
-     *
-     * @param page 页数
-     * @param size 条目数
-     * @return
-     */
-    RespPageBean getAllBlogByPage(Integer page, Integer size,Blog blog);
 
     /**
      * 发布博客
@@ -74,6 +66,5 @@ public interface BlogService {
      * @return
      */
     Long getTotal(Blog blog);
-    //TODO:1.批量删除博客 2.查询博客分页
 
 }

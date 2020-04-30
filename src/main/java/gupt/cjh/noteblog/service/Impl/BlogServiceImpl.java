@@ -37,33 +37,16 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     BlogTagMapper blogTagMapper;
 
-    @Override
-    public RespPageBean getAllBlogByPage(Integer page, Integer size,Blog blog) {
-        if (page != null && size != null) {
-            page = (page - 1) * size;
-        }
-
-        System.out.println("page=>"+page+ "size=>" + size);
-        List<Blog> blogs = blogMapper.getAllBlogByPage(page, size);
-        Long total = blogMapper.getTotal(blog);
-        RespPageBean bean = new RespPageBean();
-        bean.setData(blogs);
-        bean.setTotal(total);
-        return bean;
-    }
 
     @Override
     public RespPageBean getBlogById(Integer page, Integer size, Blog blog) {
-
-        System.out.println("blog=>"+blog);
         if (page != null && size != null) {
             page = (page - 1) * size;
         }
-        System.out.println("page=>"+page+ "size=>" + size);
-        List<Blog> blogs = blogMapper.selectBlogById(page, size, blog);
+        List<Blog> blogList = blogMapper.selectBlogById(page, size, blog);
         Long total = blogMapper.getTotal(blog);
         RespPageBean bean = new RespPageBean();
-        bean.setData(blogs);
+        bean.setData(blogList);
         bean.setTotal(total);
         return bean;
     }
@@ -74,8 +57,6 @@ public class BlogServiceImpl implements BlogService {
         if (blog!=null){
             blog.setUpdateTime(new Date());
             blogMapper.updateByPrimaryKeySelective(blog);
-            System.out.println("updateBlogInfo=>"+blog.toString());
-            System.out.println("updateBlogInfo=>"+Arrays.toString(tagId));
             blogTagMapper.deleteByBlogId(blog.getId());
             return blogTagMapper.insertBlogTag(blog.getId(),tagId)==tagId.length;
         }
@@ -90,7 +71,6 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Integer deleteBatchBlog(Integer[] blogIds) {
-        System.out.println("blogids=>"+blogIds);
         blogTagMapper.deleteBatchBlogWithTag(blogIds);
         return blogMapper.deleteBatchBlog(blogIds);
     }

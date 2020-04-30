@@ -4,6 +4,10 @@ import gupt.cjh.noteblog.dao.BlogMapper;
 import gupt.cjh.noteblog.pojo.*;
 import gupt.cjh.noteblog.service.BlogService;
 import gupt.cjh.noteblog.service.Impl.BlogServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,19 +25,24 @@ import java.util.List;
  * @Version V1.0
  **/
 @RestController
+@RequestMapping("/blog")
+@Api(value = "博客信息管理")
 public class BlogController {
 
     @Autowired
     BlogServiceImpl blogService;
 
-    @GetMapping("/getAllBlogByPage")
-    public RespPageBean getAllBlogByPage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size,Blog blog) {
-        return blogService.getAllBlogByPage(page,size,blog);
+    @ApiOperation(value = "获取博客信息",notes = "分页获取博客信息及数量，可根据Blog的内容属性模糊搜索相应博客，以及对应的条目数")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "页码", defaultValue = "1",required = false),
+            @ApiImplicitParam(name = "size", value = "页数", defaultValue = "10",required = false),
+            @ApiImplicitParam(name = "blog", value = "Blog类属性", defaultValue = "内容",required = false),
     }
-
+    )
     @GetMapping("/getBlogById")
-    public RespPageBean getBlogById(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Blog blog) {
-        return blogService.getBlogById(page,size,blog);
+    public RespBean getBlogById(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Blog blog) {
+        RespPageBean blogById = blogService.getBlogById(page, size, blog);
+        return RespBean.ok(CodeMsg.SUCCESS,blogById);
     }
 
     @PostMapping("/releaseBlog")
@@ -53,7 +62,6 @@ public class BlogController {
 
     @PutMapping("/updateBlog")
     public RespBean updateBlog(@RequestBody FrontBlogTag frontBlogTag) {
-        //1.获取需要修改的信息
         Blog blog = new Blog
                 (frontBlogTag.getId(), frontBlogTag.getUId(), frontBlogTag.getTitle(), frontBlogTag.getDescription(), frontBlogTag.getContent());
         Tag[] tags1 = frontBlogTag.getTags();
@@ -64,7 +72,6 @@ public class BlogController {
         if (blogService.updateBlog(blog, tags)) {
             return RespBean.ok(CodeMsg.SUCCESS);
         }
-        //2.需要修改的tag = >  获取修改了的blog的id,再去中间表修改关系
         return RespBean.error(CodeMsg.FAILED);
     }
 
