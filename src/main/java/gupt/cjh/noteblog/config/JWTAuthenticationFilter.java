@@ -59,6 +59,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     // 成功验证后调用的方法
     // 如果验证成功，就生成token并返回
+    //TODO:存入redis，设置时间
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,
