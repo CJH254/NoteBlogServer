@@ -1,9 +1,8 @@
 package gupt.cjh.noteblog.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gupt.cjh.noteblog.pojo.RespBean;
+import gupt.cjh.noteblog.entity.RespBean;
 import gupt.cjh.noteblog.service.Impl.UserServiceImpl;
-import gupt.cjh.noteblog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -87,8 +86,8 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/**").hasRole("admin")
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+                .addFilter(new LoginFilter(authenticationManager()))
+                .addFilter(new RequestFilter(authenticationManager()))
 
                 // 不需要session
                 .sessionManagement()

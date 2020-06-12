@@ -1,10 +1,9 @@
 package gupt.cjh.noteblog.controller;
 
-import gupt.cjh.noteblog.pojo.CodeMsg;
-import gupt.cjh.noteblog.pojo.RespBean;
-import gupt.cjh.noteblog.pojo.Tag;
+import gupt.cjh.noteblog.entity.CodeMsg;
+import gupt.cjh.noteblog.entity.RespBean;
+import gupt.cjh.noteblog.entity.Tag;
 import gupt.cjh.noteblog.service.Impl.TagServiceImpl;
-import gupt.cjh.noteblog.service.TagService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

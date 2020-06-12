@@ -3,9 +3,8 @@ package gupt.cjh.noteblog.service.Impl;
 import gupt.cjh.noteblog.dao.BlogMapper;
 import gupt.cjh.noteblog.dao.BlogTagMapper;
 import gupt.cjh.noteblog.dao.TagMapper;
-import gupt.cjh.noteblog.pojo.Blog;
-import gupt.cjh.noteblog.pojo.RespPageBean;
-import gupt.cjh.noteblog.pojo.Tag;
+import gupt.cjh.noteblog.entity.Blog;
+import gupt.cjh.noteblog.entity.RespPageBean;
 import gupt.cjh.noteblog.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +12,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package gupt.cjh.noteblog.dao;
 
-import gupt.cjh.noteblog.pojo.Comment;
+import gupt.cjh.noteblog.entity.Comment;
 import org.springframework.stereotype.Repository;
 
 @Repository

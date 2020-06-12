@@ -1,8 +1,8 @@
 package gupt.cjh.noteblog.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gupt.cjh.noteblog.pojo.CodeMsg;
-import gupt.cjh.noteblog.pojo.RespBean;
+import gupt.cjh.noteblog.entity.CodeMsg;
+import gupt.cjh.noteblog.entity.RespBean;
 import org.springframework.security.web.session.SessionInformationExpiredEvent;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 

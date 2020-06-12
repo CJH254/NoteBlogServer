@@ -1,4 +1,4 @@
-package gupt.cjh.noteblog.pojo;
+package gupt.cjh.noteblog.entity;
 
 public enum CodeMsg {
 

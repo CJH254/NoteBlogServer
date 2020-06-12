@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="gupt.cjh.noteblog.dao.UserMapper">
-    <resultMap id="BaseResultMap" type="gupt.cjh.noteblog.pojo.User">
+    <resultMap id="BaseResultMap" type="gupt.cjh.noteblog.entity.User">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
         <result column="username" property="username" jdbcType="VARCHAR"/>
@@ -23,7 +23,7 @@
         select * from t_user where username=#{username}
     </select>
     <!--根据ID查找用户的所有角色-->
-    <select id="getUserRolesById" resultType="gupt.cjh.noteblog.pojo.Role">
+    <select id="getUserRolesById" resultType="gupt.cjh.noteblog.entity.Role">
         select * from t_role where id in (select role_id from t_user_role where user_id = #{id})
     </select>
 
@@ -31,22 +31,22 @@
     delete from t_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="gupt.cjh.noteblog.pojo.User">
+    <insert id="insert" parameterType="gupt.cjh.noteblog.entity.User">
     insert into t_user (id, nickname, username, 
       password, type, avatar_url, 
       create_time)
-    values (#{id,jdbcType=INTEGER}, #{nickName,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{type,jdbcType=BIT}, #{avatarurl,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{nickName,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+      #{password,jdbcType=VARCHAR}, #{type,jdbcType=BIT}, #{avatarurl,jdbcType=VARCHAR},
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
-    <insert id="insertSelective" parameterType="gupt.cjh.noteblog.pojo.User" useGeneratedKeys="true"
+    <insert id="insertSelective" parameterType="gupt.cjh.noteblog.entity.User" useGeneratedKeys="true"
             keyProperty="id" keyColumn="id">
         insert into t_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
             </if>
-            <if test="nickName != null">
+            <if test="nickname != null">
                 nickname,
             </if>
             <if test="username != null">
@@ -55,7 +55,7 @@
             <if test="password != null">
                 password,
             </if>
-            <if test="avatarurl != null">
+            <if test="avatarUrl != null">
                 avatar_url,
             </if>
             <if test="createTime != null">
@@ -66,8 +66,8 @@
             <if test="id != null">
                 #{id,jdbcType=INTEGER},
             </if>
-            <if test="nickName != null">
-                #{nickName,jdbcType=VARCHAR},
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
             </if>
             <if test="username != null">
                 #{username,jdbcType=VARCHAR},
@@ -75,15 +75,15 @@
             <if test="password != null">
                 #{password,jdbcType=VARCHAR},
             </if>
-            <if test="avatarurl != null">
-                #{avatarurl,jdbcType=VARCHAR},
+            <if test="avatarUrl != null">
+                #{avatarUrl,jdbcType=VARCHAR},
             </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="gupt.cjh.noteblog.pojo.User">
+    <update id="updateByPrimaryKeySelective" parameterType="gupt.cjh.noteblog.entity.User">
         update t_user
         <set>
             <if test="nickName != null">
@@ -105,7 +105,7 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="gupt.cjh.noteblog.pojo.User">
+    <update id="updateByPrimaryKey" parameterType="gupt.cjh.noteblog.entity.User">
     update t_user
     set nickname = #{nickName,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},

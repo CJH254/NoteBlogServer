@@ -26,9 +26,10 @@ import java.util.Collections;
  * 验证成功当然就是进行鉴权了
  * 登录成功之后走此类进行鉴权操作
  */
-public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-    public JWTAuthorizationFilter(AuthenticationManager authenticationManager) {
+public class RequestFilter extends BasicAuthenticationFilter {
+
+    public RequestFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
 
@@ -52,6 +53,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         String token = tokenHeader.replace(TestJwtUtils.TOKEN_PREFIX, "");
         String username = TestJwtUtils.getUsername(token);
         String role = TestJwtUtils.getUserRole(token);
+
         if (username != null){
             return new UsernamePasswordAuthenticationToken(username, null,
                     Collections.singleton(new SimpleGrantedAuthority(role))

@@ -2,7 +2,7 @@ package gupt.cjh.noteblog.service.Impl;
 
 import gupt.cjh.noteblog.dao.UserMapper;
 import gupt.cjh.noteblog.dao.UserRoleMapper;
-import gupt.cjh.noteblog.pojo.User;
+import gupt.cjh.noteblog.entity.User;
 import gupt.cjh.noteblog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

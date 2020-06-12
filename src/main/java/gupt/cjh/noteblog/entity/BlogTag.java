@@ -1,10 +1,8 @@
-package gupt.cjh.noteblog.pojo;
+package gupt.cjh.noteblog.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
-import org.omg.CORBA.INTERNAL;
-import org.omg.PortableInterceptor.INACTIVE;
 
 import java.io.Serializable;
 @Data

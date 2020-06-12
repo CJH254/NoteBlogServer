@@ -4,6 +4,10 @@ spring:
     url: jdbc:mysql://119.23.33.19/noteblog?useUnicode=true&characterEncoding=utf-8
     username: root
     password: 123456
+  redis:
+    host: 119.23.33.19
+    port: 6379
+    password: 123456
 mybatis:
   mapper-locations: classpath:mapper/*.xml
 
@@ -13,4 +17,12 @@ logging:
     gupt.cjh: debug
 server:
   port: 8082
+
+
+#自定义参数，可以迁移走
+token:
+  #redis默认过期时间（2小时）(这是自定义的)(毫秒)
+  expirationMilliSeconds: 7200000
+
+
 

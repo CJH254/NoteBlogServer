@@ -1,6 +1,6 @@
 package gupt.cjh.noteblog.utils;
 
-import gupt.cjh.noteblog.pojo.User;
+import gupt.cjh.noteblog.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -114,58 +114,5 @@ public class TestJwtUtils {
         return claims.getExpiration().before(new Date());
     }
 
-    public static void main(String[] args) {
-        String name = "acong";
-        String role = "rol";
-        String token = createToken(name,role);
-        System.out.println(token);
-
-        Claims claims = checkJWT(token);
-        System.out.println(claims.get("username"));
-
-        System.out.println(getUsername(token));
-        System.out.println(getUserRole(token));
-        System.out.println(isExpiration(token));
-
-    }
-
-
-    /**
-     * eyJhbGciOiJIUzI1NiJ9.
-     * eyJzdWIiOiJjb25nZ2UiLCJpZCI6IjExMDExIiwibmFtZSI6Im51b3dlaXNpa2kiLCJpbWciOiJ3d3cudW9rby5jb20vMS5wbmciLCJpYXQiOjE1NTQ5OTI1NzksImV4cCI6MTU1NTU5NzM3OX0.
-     * 6DJ9En-UBcTiMRldZeevJq3e1NxJgOWryUyim4_-tEE
-     *
-     * @param args
-     */
-
-	/*public static void main(String[] args) {
-
-		Users user = new Users();
-		user.setId("11011");
-		user.setUserName("nuoweisiki");
-		user.setFaceImage("www.uoko.com/1.png");
-		String token = generateJsonWebToken(user);
-
-		System.out.println(token);
-
-		Claims claims = checkJWT(token);
-		if (claims != null) {
-			String id = claims.get("id").toString();
-			String name = claims.get("name").toString();
-			String img = claims.get("img").toString();
-
-			String rol = claims.get("rol").toString();
-
-			System.out.println("id:" + id);
-			System.out.println("name:" + name);
-			System.out.println("img:" + img);
-
-			System.out.println("rol:" + rol);
-
-
-
-		}
-
-	}*/
 
 }

@@ -1,4 +1,4 @@
-package gupt.cjh.noteblog.pojo;
+package gupt.cjh.noteblog.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

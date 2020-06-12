@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="gupt.cjh.noteblog.dao.BlogMapper">
-    <resultMap id="BaseResultMap" type="gupt.cjh.noteblog.pojo.Blog">
+    <resultMap id="BaseResultMap" type="gupt.cjh.noteblog.entity.Blog">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="uid" property="uId" jdbcType="INTEGER"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
@@ -16,8 +16,8 @@
         id,uId, title, description, content, views, status, create_time, update_time
     </sql>
 
-    <resultMap id="BlogWithTag" type="gupt.cjh.noteblog.pojo.Blog" extends="BaseResultMap">
-        <collection property="tags" ofType="gupt.cjh.noteblog.pojo.Tag">
+    <resultMap id="BlogWithTag" type="gupt.cjh.noteblog.entity.Blog" extends="BaseResultMap">
+        <collection property="tags" ofType="gupt.cjh.noteblog.entity.Tag">
             <id column="tid" property="id" jdbcType="INTEGER"/>
             <result column="tag_name" property="name" jdbcType="VARCHAR"/>
         </collection>
@@ -79,7 +79,7 @@
     delete from t_blog
     where id = #{id,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="gupt.cjh.noteblog.pojo.Blog">
+    <insert id="insert" parameterType="gupt.cjh.noteblog.entity.Blog">
     insert into t_blog (id,uId, title, description,
       content, views, status, 
       create_time, update_time)
@@ -87,7 +87,7 @@
       #{content,jdbcType=VARCHAR}, #{views,jdbcType=INTEGER}, #{status,jdbcType=BIT}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-    <insert id="insertSelective" parameterType="gupt.cjh.noteblog.pojo.Blog" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelective" parameterType="gupt.cjh.noteblog.entity.Blog" useGeneratedKeys="true" keyProperty="id">
         insert into t_blog
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -148,7 +148,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="gupt.cjh.noteblog.pojo.Blog">
+    <update id="updateByPrimaryKeySelective" parameterType="gupt.cjh.noteblog.entity.Blog">
         update t_blog
         <set>
             <if test="uId != null">
@@ -178,7 +178,7 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="gupt.cjh.noteblog.pojo.Blog">
+    <update id="updateByPrimaryKey" parameterType="gupt.cjh.noteblog.entity.Blog">
     update t_blog
     set
     uId = #{uId,jdbcType=INTEGER}

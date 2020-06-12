@@ -1,6 +1,6 @@
 package gupt.cjh.noteblog.dao;
 
-import gupt.cjh.noteblog.pojo.Role;
+import gupt.cjh.noteblog.entity.Role;
 import org.springframework.stereotype.Repository;
 
 @Repository

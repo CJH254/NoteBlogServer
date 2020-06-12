@@ -1,9 +1,7 @@
 package gupt.cjh.noteblog.service;
 
-import gupt.cjh.noteblog.pojo.Blog;
-import gupt.cjh.noteblog.pojo.RespPageBean;
-
-import java.util.List;
+import gupt.cjh.noteblog.entity.Blog;
+import gupt.cjh.noteblog.entity.RespPageBean;
 
 /**
  * @ClassName BlogService

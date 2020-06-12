@@ -1,10 +1,8 @@
-package gupt.cjh.noteblog.pojo;
+package gupt.cjh.noteblog.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
-
-import java.util.List;
 
 /**
  * @ClassName FrontBlogTag

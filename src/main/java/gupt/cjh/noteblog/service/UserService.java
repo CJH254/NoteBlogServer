@@ -1,19 +1,6 @@
 package gupt.cjh.noteblog.service;
 
-import gupt.cjh.noteblog.dao.UserMapper;
-import gupt.cjh.noteblog.dao.UserRoleMapper;
-import gupt.cjh.noteblog.pojo.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
+import gupt.cjh.noteblog.entity.User;
 
 /**
  * @ClassName UserService

@@ -1,7 +1,7 @@
 package gupt.cjh.noteblog.service.Impl;
 
 import gupt.cjh.noteblog.dao.TagMapper;
-import gupt.cjh.noteblog.pojo.Tag;
+import gupt.cjh.noteblog.entity.Tag;
 import gupt.cjh.noteblog.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

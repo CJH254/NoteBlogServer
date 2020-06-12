@@ -9,9 +9,9 @@ package gupt.cjh.noteblog.config;
  **/
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gupt.cjh.noteblog.pojo.CodeMsg;
-import gupt.cjh.noteblog.pojo.RespBean;
-import gupt.cjh.noteblog.pojo.User;
+import gupt.cjh.noteblog.entity.CodeMsg;
+import gupt.cjh.noteblog.entity.RespBean;
+import gupt.cjh.noteblog.entity.User;
 import gupt.cjh.noteblog.utils.TestJwtUtils;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -26,6 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 验证用户名密码正确后，生成一个token，并将token返回给客户端
@@ -33,11 +35,12 @@ import java.util.Collection;
  * attemptAuthentication：接收并解析用户凭证。
  * successfulAuthentication：用户成功登录后，这个方法会被调用，我们在这个方法里生成token并返回。
  */
-public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private AuthenticationManager authenticationManager;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+
+    public LoginFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
         super.setFilterProcessesUrl("/doLogin");
     }
@@ -57,8 +60,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         }
     }
 
-    // 成功验证后调用的方法
-    // 如果验证成功，就生成token并返回
     //TODO:存入redis，设置时间
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
@@ -72,20 +73,23 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         for (GrantedAuthority authority : authorities) {
             role = authority.getAuthority();
         }
+
+
         String token = TestJwtUtils.createToken(user.getUsername(), role);
-        //String token = JwtTokenUtils.createToken(jwtUser.getUsername(), false);
-        // 返回创建成功的token
-        // 但是这里创建的token只是单纯的token
-        // 按照jwt的规定，最后请求的时候应该是 `Bearer token`
+        String tokenStr = TestJwtUtils.TOKEN_PREFIX + token;
+
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
+        Map<String, Object> map = new HashMap<>();
+        map.put("token", tokenStr);
+        map.put("nickname", user.getUsername());
+        map.put("avatarUrl", user.getAvatarUrl());
+        RespBean<Map<String, Object>> respBean = RespBean.ok(CodeMsg.SUCCESS, map);
+        PrintWriter out = response.getWriter();
+        out.write(new ObjectMapper().writeValueAsString(respBean));
+        out.flush();
+        out.close();
 
-        String tokenStr = TestJwtUtils.TOKEN_PREFIX + token;
-        response.setHeader("token", tokenStr);
-
-        RespBean<User> ok = RespBean.ok(CodeMsg.SUCCESS, user);
-        String s = new ObjectMapper().writeValueAsString(ok);
-        response.getWriter().write(s);
     }
 
     @Override

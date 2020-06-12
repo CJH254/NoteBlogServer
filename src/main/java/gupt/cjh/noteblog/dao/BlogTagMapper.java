@@ -1,6 +1,6 @@
 package gupt.cjh.noteblog.dao;
 
-import gupt.cjh.noteblog.pojo.BlogTag;
+import gupt.cjh.noteblog.entity.BlogTag;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

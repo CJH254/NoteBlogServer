@@ -1,10 +1,6 @@
 package gupt.cjh.noteblog.service;
 
-import gupt.cjh.noteblog.dao.TagMapper;
-import gupt.cjh.noteblog.pojo.Tag;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import gupt.cjh.noteblog.entity.Tag;
 
 import java.util.List;
 

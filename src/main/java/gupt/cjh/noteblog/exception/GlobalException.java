@@ -1,7 +1,7 @@
 package gupt.cjh.noteblog.exception;
 
 
-import gupt.cjh.noteblog.pojo.CodeMsg;
+import gupt.cjh.noteblog.entity.CodeMsg;
 import lombok.Data;
 
 @Data

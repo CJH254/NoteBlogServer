@@ -1,8 +1,8 @@
 package gupt.cjh.noteblog.exception;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
-import gupt.cjh.noteblog.pojo.CodeMsg;
-import gupt.cjh.noteblog.pojo.RespBean;
+import gupt.cjh.noteblog.entity.CodeMsg;
+import gupt.cjh.noteblog.entity.RespBean;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
