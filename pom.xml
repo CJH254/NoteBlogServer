@@ -135,19 +135,21 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.0.0</version>
                 <configuration>
+                    <!--镜像名-->
                     <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-                    <dockerDirectory>src/main/resources</dockerDirectory>
+                    <dockerDirectory></dockerDirectory>
                     <!-- 这里是复制 jar 包到 docker 容器指定目录配置 -->
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
+                            <!--用于指定需要复制的根目录 ${project.build.directory}表示target目录-->
                             <directory>${project.build.directory}</directory>
+                            <!--  用于指定需要复制的的文件 ${project.build.finalName}.jar 表示打包后的jar文件-->
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
                 </configuration>
             </plugin>
-
 
 
             <!-- mybatis代码生成插件 -->

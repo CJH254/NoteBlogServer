@@ -51,19 +51,22 @@ public class BlogServiceImpl implements BlogService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     public Boolean updateBlog(Blog blog, Integer[] tagId) {
-        if (blog!=null){
+        boolean isUpdate = false;
+        if (blog != null) {
             blog.setUpdateTime(new Date());
-            blogMapper.updateByPrimaryKeySelective(blog);
-            blogTagMapper.deleteByBlogId(blog.getId());
-            return blogTagMapper.insertBlogTag(blog.getId(),tagId)==tagId.length;
+            isUpdate = blogMapper.updateByPrimaryKeySelective(blog) == 1;
+            if (tagId != null && tagId.length != 0) {
+                blogTagMapper.deleteByBlogId(blog.getId());
+                isUpdate = blogTagMapper.insertBlogTag(blog.getId(), tagId) == tagId.length;
+            }
         }
-        return false;
+        return isUpdate;
     }
 
     @Override
     public Integer deleteBlog(Integer blogId) {
         blogTagMapper.deleteByBlogId(blogId);
-        return  blogMapper.deleteByPrimaryKey(blogId);
+        return blogMapper.deleteByPrimaryKey(blogId);
     }
 
     @Override
@@ -80,12 +83,15 @@ public class BlogServiceImpl implements BlogService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     public Boolean releaseBlog(Blog blog, Integer[] tagId) {
+        boolean isRelease = false;
         if (blog != null) {
             blog.setCreateTime(new Date());
-            blogMapper.insertSelective(blog);
-            return blogTagMapper.insertBlogTag(blog.getId(), tagId) == tagId.length;
+            isRelease = blogMapper.insertSelective(blog) == 1;
+            if (tagId != null && tagId.length != 0) {
+                isRelease = blogTagMapper.insertBlogTag(blog.getId(), tagId) == tagId.length;
+            }
         }
-        return false;
+        return isRelease;
     }
 
 

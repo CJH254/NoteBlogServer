@@ -39,7 +39,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private AuthenticationManager authenticationManager;
 
-
     public LoginFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
         super.setFilterProcessesUrl("/doLogin");
@@ -60,7 +59,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         }
     }
 
-    //TODO:存入redis，设置时间
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,

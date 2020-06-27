@@ -1,7 +1,7 @@
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://119.23.33.19/noteblog?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://119.23.33.19/noteblog?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
   redis:

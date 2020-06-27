@@ -27,8 +27,8 @@
     <!--根据用户ID分页获取相应博客-->
     <select id="selectBlogById" resultMap="BlogWithTag" parameterType="java.lang.Integer">
         SELECT b.*,t.id AS tid,t.`name` AS tag_name
-        FROM `t_blog`b INNER JOIN t_blog_tag bt ON b.id = bt.blog_id
-        INNER JOIN t_tag t ON bt.tag_id = t.id
+        FROM `t_blog`b LEFT JOIN t_blog_tag bt ON b.id = bt.blog_id
+        LEFT JOIN t_tag t ON bt.tag_id = t.id
         <where>
             <if test="blog != null">
                 <if test="blog.uId !=null and blog.uId !='' ">

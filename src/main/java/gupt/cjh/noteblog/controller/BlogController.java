@@ -44,7 +44,10 @@ public class BlogController {
         Blog blog = new Blog
                 (ft.getUId(), ft.getTitle(), ft.getDescription(), ft.getContent());
         Tag[] tags = ft.getTags();
-        Integer[] integers = Arrays.stream(tags).map(ele -> ele.getId()).toArray(Integer[]::new);
+        Integer[] integers = null;
+        if (tags!=null&&tags.length!=0){
+            integers = Arrays.stream(tags).map(ele -> ele.getId()).toArray(Integer[]::new);
+        }
         return blogService.releaseBlog(blog, integers) ? RespBean.ok(CodeMsg.SUCCESS) : RespBean.error(CodeMsg.FAILED);
     }
 
@@ -53,9 +56,11 @@ public class BlogController {
         Blog blog = new Blog
                 (ft.getId(), ft.getUId(), ft.getTitle(), ft.getDescription(), ft.getContent());
         Tag[] tags = ft.getTags();
-        Integer[] integers = Arrays.stream(tags).map(ele -> ele.getId()).toArray(Integer[]::new);
-        return blogService.updateBlog(blog, integers)
-                ? RespBean.ok(CodeMsg.SUCCESS) : RespBean.error(CodeMsg.FAILED);
+        Integer[] integers = null;
+        if (tags!=null&&tags.length!=0){
+            integers = Arrays.stream(tags).map(ele -> ele.getId()).toArray(Integer[]::new);
+        }
+        return blogService.updateBlog(blog, integers) ? RespBean.ok(CodeMsg.SUCCESS) : RespBean.error(CodeMsg.FAILED);
     }
 
     @DeleteMapping("/deleteBlog/{id}")
