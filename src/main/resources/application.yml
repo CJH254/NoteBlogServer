@@ -4,10 +4,23 @@ spring:
     url: jdbc:mysql://119.23.33.19/noteblog?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
-  redis:
-    host: 119.23.33.19
-    port: 6379
-    password: 123456
+#  redis:
+#    host: 119.23.33.19
+#    port: 6379
+#    password: 123456
+#  mail:
+#    host: stmp.qq.com
+#    protocol: smtp
+#    default-encoding: UTF-8
+#    username: 814626551@qq.com
+#    password: nkkqkrftvfmlbfai
+#    port: 587
+#    properties:
+#      mail:
+#        smtp:
+#          socketFactory.class: javax.net.ssl.SSLSocketFactory
+#      debug: true
+
 mybatis:
   mapper-locations: classpath:mapper/*.xml
 
@@ -18,6 +31,7 @@ logging:
 server:
   port: 8082
 
+#邮箱配置
 
 #自定义参数，可以迁移走
 token:

@@ -80,6 +80,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         response.setContentType("application/json; charset=utf-8");
         Map<String, Object> map = new HashMap<>();
         map.put("token", tokenStr);
+        map.put("id",user.getId());
         map.put("nickname", user.getUsername());
         map.put("avatarUrl", user.getAvatarUrl());
         RespBean<Map<String, Object>> respBean = RespBean.ok(CodeMsg.SUCCESS, map);

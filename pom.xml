@@ -67,12 +67,6 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-        <!--分页工具-->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.2.5</version>
-        </dependency>
         <!--Swagger接口-->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -94,6 +88,21 @@
         <!--    <groupId>com.qiniu</groupId>-->
         <!--    <artifactId>qiniu-java-sdk</artifactId>-->
         <!--    <version>7.2.27</version>-->
+        <!--</dependency>-->
+        <!--邮件发送-->
+        <!--<dependency>-->
+        <!--    <groupId>org.springframework.boot</groupId>-->
+        <!--    <artifactId>spring-boot-starter-amqp</artifactId>-->
+        <!--    <version>1.5.2.RELEASE</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--    <groupId>org.springframework.boot</groupId>-->
+        <!--    <artifactId>spring-boot-starter-mail</artifactId>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash;thymeleaf模板&ndash;&gt;-->
+        <!--<dependency>-->
+        <!--    <groupId>org.springframework.boot</groupId>-->
+        <!--    <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
         <!--</dependency>-->
 
 

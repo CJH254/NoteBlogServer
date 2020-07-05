@@ -33,6 +33,16 @@ public interface BlogService {
      */
     RespPageBean getBlogById(Integer page, Integer size, Blog blog);
 
+    /***
+     * 根据blogId获取帖子详情
+     * @param blogId
+     * @return gupt.cjh.noteblog.entity.Blog
+     * @author 二维世界是个圆
+     * @createTime 2020/7/6 0:48
+     *
+     */
+    Blog getBlogDetail(Integer blogId);
+
     /**
      * 修改用户博客
      *
@@ -60,6 +70,7 @@ public interface BlogService {
 
     /**
      * 获取博客数量
+     *
      * @param blog
      * @return
      */

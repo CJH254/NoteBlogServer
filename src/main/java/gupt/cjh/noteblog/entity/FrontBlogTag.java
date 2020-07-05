@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.List;
+
 /**
  * @ClassName FrontBlogTag
  * @Description: TODO
@@ -14,14 +16,12 @@ import lombok.ToString;
 @Data
 @ToString
 @AllArgsConstructor
-
 public class FrontBlogTag {
     private Integer id;
     private Integer uId;
     private String title;
-
     private String description;
 
     private String content;
-    private Tag[] tags;
+    private List<Tag> tags;
 }

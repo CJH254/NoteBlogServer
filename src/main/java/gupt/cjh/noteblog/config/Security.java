@@ -94,7 +94,7 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .maximumSessions(1)
                 .maxSessionsPreventsLogin(false)
-                .expiredSessionStrategy(new ExpiredSessionStrategy())
+                //.expiredSessionStrategy(new ExpiredSessionStrategy())
                 .and()
                 .and().exceptionHandling()
                 .authenticationEntryPoint(new AuthenticationEntryPoint() {

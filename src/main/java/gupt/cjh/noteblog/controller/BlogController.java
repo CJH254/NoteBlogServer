@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * @ClassName BlogService
@@ -36,31 +36,37 @@ public class BlogController {
     @GetMapping("/getBlogById")
     public RespBean getBlogById(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Blog blog) {
         RespPageBean blogById = blogService.getBlogById(page, size, blog);
-        return RespBean.ok(CodeMsg.SUCCESS, blogById);
+        return blogById!=null?RespBean.ok(CodeMsg.SUCCESS, blogById):RespBean.error(CodeMsg.FAILED,null);
+    }
+
+    @GetMapping("/getBlogDetail/{id}")
+    public RespBean getBlogDetail(@PathVariable("id") Integer blogId) {
+        Blog blog = blogService.getBlogDetail(blogId);
+        return blog!=null? RespBean.ok(CodeMsg.SUCCESS, blog):RespBean.error(CodeMsg.FAILED,null);
     }
 
     @PostMapping("/releaseBlog")
-    public RespBean releaseBlog(@RequestBody FrontBlogTag ft) {
+    public RespBean releaseBlog(@RequestBody FrontBlogTag fb) {
+        List<Tag> tags = fb.getTags();
         Blog blog = new Blog
-                (ft.getUId(), ft.getTitle(), ft.getDescription(), ft.getContent());
-        Tag[] tags = ft.getTags();
-        Integer[] integers = null;
-        if (tags!=null&&tags.length!=0){
-            integers = Arrays.stream(tags).map(ele -> ele.getId()).toArray(Integer[]::new);
+                (fb.getUId(), fb.getTitle(), fb.getDescription(), fb.getContent());
+        Integer[] releaseIds = null;
+        if (tags != null && tags.size() != 0) {
+            releaseIds = tags.stream().map(ele -> ele.getId()).toArray(Integer[]::new);
         }
-        return blogService.releaseBlog(blog, integers) ? RespBean.ok(CodeMsg.SUCCESS) : RespBean.error(CodeMsg.FAILED);
+        return blogService.releaseBlog(blog, releaseIds) ? RespBean.ok(CodeMsg.SUCCESS) : RespBean.error(CodeMsg.FAILED);
     }
 
     @PutMapping("/updateBlog")
     public RespBean updateBlog(@RequestBody FrontBlogTag ft) {
+        List<Tag> tags = ft.getTags();
         Blog blog = new Blog
-                (ft.getId(), ft.getUId(), ft.getTitle(), ft.getDescription(), ft.getContent());
-        Tag[] tags = ft.getTags();
-        Integer[] integers = null;
-        if (tags!=null&&tags.length!=0){
-            integers = Arrays.stream(tags).map(ele -> ele.getId()).toArray(Integer[]::new);
+                (ft.getTitle(), ft.getId(), ft.getDescription(), ft.getContent());
+        Integer[] updateIds = null;
+        if (tags != null && tags.size() != 0) {
+            updateIds = tags.stream().map(ele -> ele.getId()).toArray(Integer[]::new);
         }
-        return blogService.updateBlog(blog, integers) ? RespBean.ok(CodeMsg.SUCCESS) : RespBean.error(CodeMsg.FAILED);
+        return blogService.updateBlog(blog, updateIds) ? RespBean.ok(CodeMsg.SUCCESS) : RespBean.error(CodeMsg.FAILED);
     }
 
     @DeleteMapping("/deleteBlog/{id}")

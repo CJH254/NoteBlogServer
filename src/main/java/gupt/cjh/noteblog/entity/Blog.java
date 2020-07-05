@@ -47,6 +47,13 @@ public class Blog implements Serializable {
         this.content = content;
     }
 
+    public Blog(String title, Integer id, String description, String content) {
+        this.id=id;
+        this.title = title;
+        this.description = description;
+        this.content = content;
+    }
+
     public Blog( Integer id,Integer uId,String title, String description, String content) {
         this.id=id;
         this.uId=uId;

@@ -25,10 +25,10 @@
 
     <!--自定义SQL-->
     <!--根据用户ID分页获取相应博客-->
-    <select id="selectBlogById" resultMap="BlogWithTag" parameterType="java.lang.Integer">
+    <select id="selectBlogByUserId" resultMap="BlogWithTag" parameterType="java.lang.Integer">
         SELECT b.*,t.id AS tid,t.`name` AS tag_name
         FROM `t_blog`b LEFT JOIN t_blog_tag bt ON b.id = bt.blog_id
-        LEFT JOIN t_tag t ON bt.tag_id = t.id
+                       LEFT JOIN t_tag t ON bt.tag_id = t.id
         <where>
             <if test="blog != null">
                 <if test="blog.uId !=null and blog.uId !='' ">
@@ -43,6 +43,16 @@
         <if test="page !=null and size !=null ">
             limit #{page},#{size}
         </if>
+    </select>
+    <select id="getBlogDetail" resultMap="BlogWithTag" parameterType="java.lang.Integer">
+        SELECT b.*,t.id AS tid,t.`name` AS tag_name
+        FROM `t_blog`b LEFT JOIN t_blog_tag bt ON b.id = bt.blog_id
+                       LEFT JOIN t_tag t ON bt.tag_id = t.id
+        <where>
+                <if test="blogId !=null and blogId !='' ">
+                    AND b.id =#{blogId}
+                </if>
+        </where>
     </select>
     <!--批量删除标签-->
     <delete id="deleteBatchBlog">
@@ -63,7 +73,6 @@
                     AND content like concat('%',#{blog.content},'%')
                 </if>
             </if>
-
         </where>
     </select>
 
@@ -75,6 +84,7 @@
         from t_blog
         where id = #{id,jdbcType=INTEGER}
     </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_blog
     where id = #{id,jdbcType=INTEGER}

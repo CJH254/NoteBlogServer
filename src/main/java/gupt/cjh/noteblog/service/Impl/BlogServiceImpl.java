@@ -40,12 +40,18 @@ public class BlogServiceImpl implements BlogService {
         if (page != null && size != null) {
             page = (page - 1) * size;
         }
-        List<Blog> blogList = blogMapper.selectBlogById(page, size, blog);
+        List<Blog> blogList = blogMapper.selectBlogByUserId(page, size, blog);
         Long total = blogMapper.getTotal(blog);
         RespPageBean bean = new RespPageBean();
         bean.setData(blogList);
         bean.setTotal(total);
         return bean;
+    }
+
+    @Override
+    public Blog getBlogDetail(Integer blogId) {
+        Blog blog = blogMapper.getBlogDetail(blogId);
+        return blog;
     }
 
     @Override

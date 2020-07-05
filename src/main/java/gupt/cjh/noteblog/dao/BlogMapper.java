@@ -21,7 +21,9 @@ public interface BlogMapper {
     int updateByPrimaryKey(Blog record);
 
 
-    List<Blog> selectBlogById(@Param("page") Integer page, @Param("size") Integer size, @Param("blog") Blog blog);
+    List<Blog> selectBlogByUserId(@Param("page") Integer page, @Param("size") Integer size, @Param("blog") Blog blog);
+
+    Blog getBlogDetail(@Param("blogId") Integer blogId);
 
     Integer deleteBatchBlog(@Param("BlogIds") Integer[] BlogIds);
 
